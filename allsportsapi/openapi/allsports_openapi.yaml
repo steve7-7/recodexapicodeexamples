@@ -4866,6 +4866,57 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /api/basketball/matches/odds/{day}/{month}/{year}:
+    get:
+      tags:
+      - Basketball
+      - Matches
+      - Odds
+      summary: Get basketball betting events by date
+      operationId: basketballMatchesOddsByDate
+      description: Returns basketball events with odds information for the specified
+        date.
+      parameters:
+      - name: day
+        in: path
+        required: true
+        example: 22
+        schema:
+          type: integer
+        description: Day of the month.
+      - name: month
+        in: path
+        required: true
+        example: 7
+        schema:
+          type: integer
+        description: Month of the year.
+      - name: year
+        in: path
+        required: true
+        example: 2025
+        schema:
+          type: integer
+        description: Four-digit year.
+      responses:
+        '200':
+          description: A JSON object containing basketball events with odds.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSONResult'
+        '400':
+          description: Invalid date format in path.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /api/basketball/matches/odds/featured/{providerId}:
     get:
       tags:

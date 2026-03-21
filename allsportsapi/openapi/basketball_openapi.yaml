@@ -311,6 +311,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+  /api/placeholders/fighter-male.svg:
+    get:
+      tags:
+      - Media
+      - Placeholder
+      summary: Get male fighter placeholder image
+      operationId: maleFighterPlaceholderImage
+      description: Retrieves a placeholder image for a male fighter.
+      responses:
+        '200':
+          description: The placeholder SVG image.
+          content:
+            image/svg+xml:
+              schema:
+                type: string
+                format: binary
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/placeholders/fighter-female.svg:
+    get:
+      tags:
+      - Media
+      - Placeholder
+      summary: Get female fighter placeholder image
+      operationId: femaleFighterPlaceholderImage
+      description: Retrieves a placeholder image for a female fighter.
+      responses:
+        '200':
+          description: The placeholder SVG image.
+          content:
+            image/svg+xml:
+              schema:
+                type: string
+                format: binary
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
   /api/basketball/search/{term}:
     get:
       tags:
@@ -428,6 +472,55 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/JSONResult'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/basketball/matches/odds/{day}/{month}/{year}:
+    get:
+      tags:
+      - Match
+      summary: Get basketball betting events by date
+      operationId: basketballMatchesOddsByDate
+      description: Returns basketball events with odds information for the specified
+        date.
+      parameters:
+      - name: day
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 22
+        description: Day of the month.
+      - name: month
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 7
+        description: Month of the year.
+      - name: year
+        in: path
+        required: true
+        schema:
+          type: integer
+        example: 2025
+        description: Four-digit year.
+      responses:
+        '200':
+          description: A JSON object containing basketball events with odds.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSONResult'
+        '400':
+          description: Invalid date format in path.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Internal server error.
           content:
