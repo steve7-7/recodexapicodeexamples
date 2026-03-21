@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: OpenAPI specification derived from simplified.md endpoints.
 servers:
-- url: https://rendercodex.com
+- url: http://localhost:8080
   description: Local development server
 tags:
 - name: AllSports
@@ -33,11 +33,12 @@ paths:
           type: string
       responses:
         '200':
-          description: Successful response.
+          description: Image asset.
           content:
-            application/json:
+            image/png:
               schema:
-                "$ref": "#/components/schemas/JSONResult"
+                type: string
+                format: binary
         '400':
           description: Bad request. Check parameter values.
           content:
@@ -73,11 +74,12 @@ paths:
           type: string
       responses:
         '200':
-          description: Successful response.
+          description: Image asset.
           content:
-            application/json:
+            image/png:
               schema:
-                "$ref": "#/components/schemas/JSONResult"
+                type: string
+                format: binary
         '400':
           description: Bad request. Check parameter values.
           content:
@@ -107,7 +109,7 @@ paths:
         '200':
           description: Image asset.
           content:
-            image/png:
+            image/svg+xml:
               schema:
                 type: string
                 format: binary
@@ -161,7 +163,7 @@ paths:
         '200':
           description: Image asset.
           content:
-            image/png:
+            image/svg+xml:
               schema:
                 type: string
                 format: binary
@@ -242,7 +244,7 @@ paths:
         '200':
           description: Image asset.
           content:
-            image/png:
+            image/svg+xml:
               schema:
                 type: string
                 format: binary
@@ -2335,6 +2337,105 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
+  "/api/{sport}/events/odds/featured/{providerId}":
+    get:
+      tags:
+      - MultiSport
+      summary: Get Events Odds Featured Data
+      operationId: eventsOddsFeaturedData
+      description: Returns featured events odds details.
+      parameters:
+      - name: sport
+        in: path
+        required: true
+        example: tennis
+        description: Sport identifier used in the path.
+        schema:
+          type: string
+          enum:
+          - table-tennis
+          - tennis
+      - name: providerId
+        in: path
+        required: true
+        example: 1
+        description: Provider identifier.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/JSONResult"
+        '400':
+          description: Bad request. Check parameter values.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '404':
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+  "/api/{sport}/events/odds/featured-by-tiers/{providerId}":
+    get:
+      tags:
+      - MultiSport
+      summary: Get Events Odds Featured By Tiers Data
+      operationId: eventsOddsFeaturedByTiersData
+      description: Returns featured events odds by tiers details.
+      parameters:
+      - name: sport
+        in: path
+        required: true
+        example: table-tennis
+        description: Sport identifier used in the path.
+        schema:
+          type: string
+          enum:
+          - table-tennis
+      - name: providerId
+        in: path
+        required: true
+        example: 1
+        description: Provider identifier.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/JSONResult"
+        '400':
+          description: Bad request. Check parameter values.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '404':
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
   "/api/{sport}/events/{day}/{month}/{year}":
     get:
       tags:
@@ -2689,6 +2790,100 @@ paths:
           - table-tennis
           - tennis
           - volleyball
+      - name: tournamentId
+        in: path
+        required: true
+        example: 9464
+        description: Tournament identifier.
+        schema:
+          type: integer
+      - name: seasonId
+        in: path
+        required: true
+        example: 36422
+        description: Season identifier.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/JSONResult"
+        '400':
+          description: Bad request. Check parameter values.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '404':
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+  "/api/group/tournament/{tournamentId}/season/{seasonId}/standings/home":
+    get:
+      tags:
+      - AllSports
+      summary: Get Group Tournament Season Standings Home Data
+      operationId: groupTournamentSeasonStandingsHomeData
+      description: Returns home standings for a tournament season group.
+      parameters:
+      - name: tournamentId
+        in: path
+        required: true
+        example: 9464
+        description: Tournament identifier.
+        schema:
+          type: integer
+      - name: seasonId
+        in: path
+        required: true
+        example: 36422
+        description: Season identifier.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/JSONResult"
+        '400':
+          description: Bad request. Check parameter values.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '404':
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+  "/api/group/tournament/{tournamentId}/season/{seasonId}/standings/total":
+    get:
+      tags:
+      - AllSports
+      summary: Get Group Tournament Season Standings Total Data
+      operationId: allSportsGroupTournamentSeasonStandingsTotalData
+      description: Returns total standings for a tournament season group.
+      parameters:
       - name: tournamentId
         in: path
         required: true
@@ -4423,6 +4618,167 @@ paths:
           - table-tennis
           - tennis
           - volleyball
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/JSONResult"
+        '400':
+          description: Bad request. Check parameter values.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '404':
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+  "/api/{sport}/matches/odds/{day}/{month}/{year}":
+    get:
+      tags:
+      - MultiSport
+      summary: Get Matches Odds Data
+      operationId: sportMatchesOddsData
+      description: Returns matches odds details.
+      parameters:
+      - name: sport
+        in: path
+        required: true
+        example: basketball
+        description: Sport identifier used in the path.
+        schema:
+          type: string
+          enum:
+          - basketball
+      - name: day
+        in: path
+        required: true
+        example: 31
+        description: Day of the month (1-31).
+        schema:
+          type: integer
+      - name: month
+        in: path
+        required: true
+        example: 7
+        description: Month of the year (1-12).
+        schema:
+          type: integer
+      - name: year
+        in: path
+        required: true
+        example: 2022
+        description: Four-digit year.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/JSONResult"
+        '400':
+          description: Bad request. Check parameter values.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '404':
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+  "/api/{sport}/matches/odds/featured/{providerId}":
+    get:
+      tags:
+      - MultiSport
+      summary: Get Matches Odds Featured Data
+      operationId: sportMatchesOddsFeaturedData
+      description: Returns featured matches odds details.
+      parameters:
+      - name: sport
+        in: path
+        required: true
+        example: basketball
+        description: Sport identifier used in the path.
+        schema:
+          type: string
+          enum:
+          - basketball
+      - name: providerId
+        in: path
+        required: true
+        example: 1
+        description: Provider identifier.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/JSONResult"
+        '400':
+          description: Bad request. Check parameter values.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '404':
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+  "/api/{sport}/matches/odds/featured-by-tiers/{providerId}":
+    get:
+      tags:
+      - MultiSport
+      summary: Get Matches Odds Featured By Tiers Data
+      operationId: matchesOddsFeaturedByTiersData
+      description: Returns featured matches odds by tiers details.
+      parameters:
+      - name: sport
+        in: path
+        required: true
+        example: basketball
+        description: Sport identifier used in the path.
+        schema:
+          type: string
+          enum:
+          - basketball
+      - name: providerId
+        in: path
+        required: true
+        example: 1
+        description: Provider identifier.
+        schema:
+          type: integer
       responses:
         '200':
           description: Successful response.
@@ -19658,7 +20014,7 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-  "/api/{sport}/category/{id}/image":
+  "/api/{sport}/category/{categoryId}/image":
     get:
       tags:
       - MultiSport
@@ -19688,7 +20044,7 @@ paths:
           - table-tennis
           - tennis
           - volleyball
-      - name: id
+      - name: categoryId
         in: path
         required: true
         example: 1370
